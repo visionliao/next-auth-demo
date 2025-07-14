@@ -33,9 +33,19 @@ export function LoginFormClient() {
         // }, 1000); // 1.0秒后跳转
       } else {
         showToast(data.error || '登录失败', 'error');
+        // 登录失败时清空表单
+        if (event?.target) {
+          const form = event.target as HTMLFormElement;
+          form.reset();
+        }
       }
     } catch {
       showToast('登录失败', 'error');
+      // 异常时也清空表单
+      if (event?.target) {
+        const form = event.target as HTMLFormElement;
+        form.reset();
+      }
     }
   };
 

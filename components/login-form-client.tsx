@@ -28,9 +28,9 @@ export function LoginFormClient() {
 
       if (response.ok) {
         showToast('登录成功！', 'success');
-        // setTimeout(() => {
-        //   router.push('/');
-        // }, 1000); // 1.0秒后跳转
+        setTimeout(() => {
+          router.push('/');
+        }, 1000); // 1.0秒后跳转
       } else {
         showToast(data.error || '登录失败', 'error');
         // 登录失败时清空表单

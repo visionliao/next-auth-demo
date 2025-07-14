@@ -1,7 +1,4 @@
-import Link from 'next/link';
-import { Form } from '@/components/login_form';
-import { signIn } from '@/app/auth';
-import { SubmitButton } from '@/components/submit-button';
+import { LoginFormClient } from "@/components/login-form-client";
 
 export default function Login() {
   return (
@@ -13,25 +10,7 @@ export default function Login() {
             Use your email and password to sign in
           </p>
         </div>
-        <Form
-          action={async (formData: FormData) => {
-            'use server';
-            await signIn('credentials', {
-              redirectTo: '/protected',
-              email: formData.get('email') as string,
-              password: formData.get('password') as string,
-            });
-          }}
-        >
-          <SubmitButton>Sign in</SubmitButton>
-          <p className="text-center text-sm text-gray-600">
-            {"Don't have an account? "}
-            <Link href="/register" className="font-semibold text-gray-800">
-              Sign up
-            </Link>
-            {' for free.'}
-          </p>
-        </Form>
+        <LoginFormClient />
       </div>
     </div>
   );

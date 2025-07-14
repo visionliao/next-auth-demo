@@ -22,5 +22,17 @@ export const authConfig = {
 
       return true;
     },
+    async jwt({ token, user }) {
+      if (user) {
+        token.nickname = (user as any).nickname;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.nickname) {
+        (session.user as any).nickname = token.nickname;
+      }
+      return session;
+    },
   },
 } satisfies NextAuthConfig;

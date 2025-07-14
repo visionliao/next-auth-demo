@@ -8,6 +8,13 @@ export function Form({
   return (
     <form
       action={action}
+      onSubmit={(e) => {
+        if (typeof action === 'function') {
+          e.preventDefault();
+          const formData = new FormData(e.currentTarget);
+          action(formData, e);
+        }
+      }}
       className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
     >
       <div>
@@ -39,6 +46,7 @@ export function Form({
           name="password"
           type="password"
           required
+          autoComplete="new-password"
           className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />
       </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Form } from '@/components/form';
+import { Form } from '@/components/register_form';
 import { redirect } from 'next/navigation';
 import { createUser, getUser } from '@/lib/db/db';
 import { SubmitButton } from '@/components/submit-button';
@@ -9,12 +9,13 @@ export default function Login() {
     'use server';
     let email = formData.get('email') as string;
     let password = formData.get('password') as string;
+    let nickname = formData.get('nickname') as string;
     let user = await getUser(email);
 
     if (user.length > 0) {
       return 'User already exists'; // TODO: Handle errors with useFormStatus
     } else {
-      await createUser(email, password);
+      await createUser(email, password, nickname || undefined);
       redirect('/login');
     }
   }

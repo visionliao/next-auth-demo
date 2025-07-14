@@ -15,12 +15,12 @@ export async function getUser(email: string) {
   return await db.select().from(users).where(eq(users.email, email));
 }
 
-export async function createUser(email: string, password: string) {
+export async function createUser(email: string, password: string, nickname?: string) {
   const users = await ensureTableExists();
   let salt = genSaltSync(10);
   let hash = hashSync(password, salt);
 
-  return await db.insert(users).values({ email, password: hash });
+  return await db.insert(users).values({ email, password: hash, nickname });
 }
 
 async function ensureTableExists() {
@@ -36,7 +36,8 @@ async function ensureTableExists() {
       CREATE TABLE "User" (
         id SERIAL PRIMARY KEY,
         email VARCHAR(64),
-        password VARCHAR(64)
+        password VARCHAR(64),
+        nickname VARCHAR(100)
       );`;
   }
 
@@ -44,6 +45,7 @@ async function ensureTableExists() {
     id: serial('id').primaryKey(),
     email: varchar('email', { length: 64 }),
     password: varchar('password', { length: 64 }),
+    nickname: varchar('nickname', { length: 100 }),
   });
 
   return table;
